@@ -1,2 +1,2 @@
-# gym_toyproblems
+# gym-toyproblems
 gym toyproblems: Pendulum, Cartpole, Acrobot.
