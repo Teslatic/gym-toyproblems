@@ -4,6 +4,10 @@ from gym.utils import seeding
 import numpy as np
 from os import path
 
+
+AVAIL_TORQUE = [-1., 0., +1.]
+
+
 class Pendulum(gym.Env):
     metadata = {
         'render.modes' : ['human', 'rgb_array'],
@@ -17,8 +21,11 @@ class Pendulum(gym.Env):
         self.viewer = None
 
         high = np.array([1., 1., self.max_speed])
-        self.action_space = spaces.Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
+        # self.action_space = spaces.Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
         self.observation_space = spaces.Box(low=-high, high=high, dtype=np.float32)
+
+
+        self.action_space = spaces.Discrete(3)
 
         self.seed()
 
@@ -34,7 +41,10 @@ class Pendulum(gym.Env):
         l = 1.
         dt = self.dt
 
-        u = np.clip(u, -self.max_torque, self.max_torque)[0]
+        # u = np.clip(u, -self.max_torque, self.max_torque)[0]
+        u = AVAIL_TORQUE[u]
+
+
         self.last_u = u # for rendering
         costs = angle_normalize(th)**2 + .1*thdot**2 + .001*(u**2)
 

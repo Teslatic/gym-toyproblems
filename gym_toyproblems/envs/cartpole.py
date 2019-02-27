@@ -10,6 +10,10 @@ from gym import spaces, logger
 from gym.utils import seeding
 import numpy as np
 
+
+AVAIL_FORCE = [-10., 0., +10.]
+
+
 class Cartpole(gym.Env):
     """
     Description:
@@ -89,13 +93,8 @@ class Cartpole(gym.Env):
         state = self.state
         x, x_dot, theta, theta_dot = state
 
-        if action == 2:
-            force = self.force_mag
-        elif action == 0:
-            force = -self.force_mag
-        else:
-            force = 0
 
+        force = AVAIL_FORCE[action]
 
         # force = self.force_mag if action==1 else -self.force_mag
         costheta = math.cos(theta)
